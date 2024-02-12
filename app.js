@@ -19,9 +19,6 @@ app.get('/',function(req,res) {
 app.get('/profile',function(req,res) {
   res.render('pages/userpage');
 });
-app.get('/walletconnect',function(req,res) {
-    res.render('pages/walletconn');
-});
 app.get('/register',function(req,res) {
   res.render('pages/reg');
 });

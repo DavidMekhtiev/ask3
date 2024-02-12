@@ -3,9 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+    <title>User Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            text-align: center;
+            color: #666;
+        }
+        .user-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-    <h1>ЗДЕСЬ БУДЕТ ПРОФИЛЬ</h1>
+    <div class="container">
+        <h1>Welcome to Your User Page</h1>
+        <div class="user-info">
+            <p>Hello, <strong>User</strong>!Here's your user information:</p>
+            <ul>
+                <li><strong>Name:</strong> John Doe</li>
+                <li><strong>Email:</strong> john@example.com</li>
+                <li><strong>Role:</strong> Member</li>
+            </ul>
+        </div>
+        <div class="button-container">
+            <button id="connect-button" type="button" class="btn btn-lg" style="background-color: #04AA6D;color:white;">Connect</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('connect-button').addEventListener('click', event => {
+            let account;
+            let buttonContainer = document.getElementById('button-container');
+            let connectButton = document.getElementById('connect-button');
+            ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
+                account = accounts[0];
+                console.log(account);
+                connectButton.textContent = account;
+                connectButton.disabled = true;
+
+                ethereum.request({ method: 'eth_getBalance', params: [account, 'latest'] }).then(result => {
+                    console.log(result);
+                    let wei = parseInt(result, 16);
+                    let balance = wei / (10 ** 18);
+                    console.log(balance + " ETH");
+                });
+            });
+        });
+
+    </script>
 </body>
 </html>
