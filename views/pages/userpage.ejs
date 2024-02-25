@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <header class="sticky-top d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+          <span class="fs-4">Linkdn</span>
+        </a>
+  
+        <ul class="nav nav-pills">
+          <li class="nav-item"><a href="/" class="nav-link active" style="background-color: #04AA6D;" aria-current="page">Home</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #04AA6D;">
+              User
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/profile/<%= id %>">Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/register">Registration</a></li>
+              <li><a class="dropdown-item" href="/login">Login</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="/about" class="nav-link" style="color: #04AA6D;">About</a></li>
+        </ul>
+      </header>
+      
+      <div class="container-xxl">
+      <div class="row g-5">
+        <div class="col-md-8">
+          <h3 class="pb-4 mb-4 fst-italic border-bottom">
+            User's Posts
+          </h3>
+          <% user.posts.forEach(function(post) { %>
+            <article class="blog-post border-bottom">
+              <h2 class="display-5 link-body-emphasis mb-1"><%= post.header %></h2>
+              <p class="blog-post-meta"><%= post.createdAt %> by <a href="#"><%= user.name %></a></p>
+              <p><%= post.about %></p>
+            </article>
+          <% }); %> 
+        </div>
+    
+        <div class="col-md-4">
+          <div class="position-sticky" style="top: 2rem;">
+            <div class="card mb-3 p-2" style="max-width: 540px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="..." class="img-fluid rounded-start" alt="...">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h2 class="card-title"><%= user.name %></h2>
+                      <p class="card-text"><%= user.email %></p>
+                      <p class="card-text"><%= user.about %></p>
+                      <p class="card-text"><small class="text-body-secondary">Registered on <%= user.createdAt %></small></p>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-outline-success mb-2">Add to friends</button>
+                <button id="connect-button" type="button" class="btn btn-outline-success mb-2">Connect</button>
+              </div>
+    
+            <div>
+              <h4 class="fst-italic">Friends</h4>
+              <ul class="list-unstyled">
+                <% user.friends.forEach(function(friend) { %>
+                  <li>
+                      <div class="card mb-3 border" style="max-width: 540px;">
+                          <div class="row g-0">
+                            <div class="col-md-4">
+                              <img src="..." class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                              <div class="card-body">
+                                <h5 class="card-title"><a href="/profile/<%= friend.id %>"><%= friend.name %></a></h5>
+                                <p class="card-text"><%= friend.about %></p>
+                                <p class="card-text"><small class="text-body-secondary">Registered on <%= friend.createdAt %></small></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                  </li>
+                <% }); %> 
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    <footer class="fixed-bottom d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <p class="col-md-4 mb-0 text-body-secondary">©2024 Aitu</p>
+    
+        <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+    
+        <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="/" class="nav-link px-2 text-body-secondary">Home</a></li>
+        <li class="nav-item"><a href="/profile/<%= user.id %>" class="nav-link px-2 text-body-secondary">Profile</a></li>
+        <li class="nav-item"><a href="/register" class="nav-link px-2 text-body-secondary">Registration</a></li>
+        <li class="nav-item"><a href="/login" class="nav-link px-2 text-body-secondary">Login</a></li>
+        <li class="nav-item"><a href="/about" class="nav-link px-2 text-body-secondary">About</a></li>
+        </ul>
+    </footer>
+
+
+    <script>
+        document.getElementById('connect-button').addEventListener('click', event => {
+            let account;
+            let connectButton = document.getElementById('connect-button');
+            ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
+                account = accounts[0];
+                console.log(account);
+                connectButton.textContent = account;
+                connectButton.disabled = true;
+                connectButton.style.color = "#000000";
+                connectButton.style.border = "0px";
+                connectButton.style.fontWeight = "bold";
+
+                ethereum.request({ method: 'eth_getBalance', params: [account, 'latest'] }).then(result => {
+                    console.log(result);
+                    let wei = parseInt(result, 16);
+                    let balance = wei / (10 ** 18);
+                    console.log(balance + " ETH");
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>
